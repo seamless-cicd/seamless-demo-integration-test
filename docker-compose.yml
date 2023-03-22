@@ -1,25 +1,22 @@
 version: '3'
 services:
-  notification:
+  seamless-demo-notification:
     build: ../seamless-demo-notification
     image: 697645747316.dkr.ecr.us-east-1.amazonaws.com/seamless-cicd/seamless-demo-notification:0c35e04a7206bb0db0edcfd8fee1fe481b4229b1
-    container_name: seamless-demo-notification
     environment:
       - NOTIFICATION_ENDPOINT=https://eo181huqgm366vz.m.pipedream.net
 
-  payment:
+  seamless-demo-payment:
     build: ../seamless-demo-payment
     # Image will be overwritten with new image built from source code
     image: seamless-demo-payment:latest
-    container_name: seamless-demo-payment
     depends_on:
-      - notification
+      - seamless-demo-notification
 
-  integration-test:
+  seamless-demo-integration-test:
     build: .
     # Image will be overwritten with new image built from source code
     image: seamless-demo-payment-integration-test:latest
-    container_name: seamless-demo-integration-test
     depends_on:
-      - payment
-      - notification
+      - seamless-demo-payment
+      - seamless-demo-notification

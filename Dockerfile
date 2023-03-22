@@ -9,4 +9,6 @@ RUN npm install
 COPY . .
 RUN npm run build
 EXPOSE 3000
+
+# Integration test command
 CMD ["npm", "run", "test"]
