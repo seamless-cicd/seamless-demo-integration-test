@@ -1,0 +1,37 @@
+version: '3'
+services:
+  notification:
+    # build: ./seamless-demo-notification
+    container_name: seamless-demo-notification
+    restart: always
+    ports: 
+      - "3000"
+    environment:
+      - NOTIFICATION_ENDPOINT=https://eo181huqgm366vz.m.pipedream.net
+    networks:
+      - seamless-demo-network
+
+  payment:
+    # build: ./seamless-demo-payment
+    container_name: seamless-demo-payment
+    restart: always
+    ports:
+      - "3000"
+    networks:
+      - seamless-demo-network
+    depends_on:
+      - notification
+
+  integration-test:
+    # build: ./seamless-demo-integration-test
+    container_name: seamless-demo-integration-test
+    ports: 
+      - "3000:3000"
+    networks:
+      - seamless-demo-network
+    depends_on:
+      - payment
+      - notification
+
+networks:
+  seamless-demo-network:
